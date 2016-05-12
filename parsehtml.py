@@ -3,7 +3,7 @@
 import urllib2
 from bs4 import BeautifulSoup
 print "Oxford2Anki"
-parola = raw_input("Parola: ")
+parola = raw_input("Parola:  ")
 
 try:
     response = urllib2.urlopen(r'http://www.oxforddictionaries.com/it/definizione/inglese/'+parola)
