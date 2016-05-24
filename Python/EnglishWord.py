@@ -3,8 +3,10 @@ from bs4 import BeautifulSoup
 import urllib2,urllib,time,os
 
 class OxfordDictionary:
-    def __init__(self):
+    def __init__(self,folder = ""):
         self.url = r'http://www.oxforddictionaries.com/it/definition/english/'
+        self.url_mp3 = r'https://ssl.gstatic.com/dictionary/static/sounds/de/0/'
+        self.folder = folder
     def getWord(self,word):
         ind = self.url+word
         try:
@@ -13,8 +15,12 @@ class OxfordDictionary:
             return EnglishOxfordWord(html)
         except urllib2.HTTPError:
             return None
-    
-
+    def downloadPronunciation(self,word):
+        print self.url_mp3+word+".mp3"
+        urllib.urlretrieve (self.url_mp3+word+".mp3", word+".mp3")
+        if self.folder != "":
+            os.rename(word+".mp3",self.folder+"/"+word+".mp3")
+        
 class EnglishOxfordMeaning:
     def __init__(self,data,POS):
         self.meaning = data.find_all('span',class_= 'definition')[0].text[:-1]
